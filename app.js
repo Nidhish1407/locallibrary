@@ -19,10 +19,12 @@ app.use(compression()); //Compress all routes
 app.use(helmet()); //help protect app from well-known web vulnerabilities
 
 //Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://nidhish:prasad@cluster0.ftgev.mongodb.net/local_library?retryWrites=true&w=majority';
+const dev_db_url = 'mongodb+srv://nidhish:prasad@cluster0.ftgev.mongodb.net/local_library?retryWrites=true&w=majority'
+
+const mongoose = require('mongoose');
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
